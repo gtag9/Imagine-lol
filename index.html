@@ -1,10 +1,11 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="5; url=https://youtu.be/a1wa8YmjsqM">
-    <title>Redirecting...</title>
+    <title>LOADING...</title>
     <style>
         body {
             margin: 0;
@@ -28,10 +29,31 @@
 
         p {
             font-size: 1.5rem;
+            text-align: center;
         }
     </style>
+    <script>
+        // List of 6 links
+        const links = [
+            "https://youtube.com/shorts/x8pIbFj3-uA?si=OrK2ddRQZOdcYm_D",
+            "https://youtube.com/shorts/noL3zTI1JpI?si=cs-m91gWXQdGr0yB",
+            "https://youtube.com/shorts/1KuN6nOjsLU?si=-tqAmksGQT-KWzJ3",
+            "https://youtube.com/shorts/GFrioREuVsA?si=90Q3HIO9ZibCUtSn",
+            "https://youtube.com/shorts/N97i34LrjJ0?si=3txzENPMO-0KZC-m",
+            "https://youtube.com/shorts/ujIT9fcuMoY?si=DW5IcAv9B6RLkRUU"
+        ];
+
+        // Redirect to a random link
+        window.onload = function() {
+            const randomIndex = Math.floor(Math.random() * links.length);
+            const randomLink = links[randomIndex];
+            setTimeout(() => {
+                window.location.href = randomLink;
+            }, 5000); // Redirect after 5 seconds
+        };
+    </script>
 </head>
 <body>
-    <p>Loacing new sleepy barbarian update... Please wait!</p>
+    <p>Loading new sleepy barbarian update... Please wait!</p>
 </body>
 </html>
