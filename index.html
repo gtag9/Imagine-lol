@@ -1,63 +1,102 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GET DARIUSED 🤡...</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            color: white;
-            overflow: hidden;
-            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-            background-size: 400% 400%;
-            animation: gradient 2s infinite; /* Faster animation */
-        }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        p {
-            font-size: 1.5rem;
-            text-align: center;
-        }
-    </style>
-    <script>
-        // List of 10 links
-        const links = [
-           "https://youtube.com/shorts/x8pIbFj3-uA?si=8X7yfHymSdBymJXB",
-            "https://youtube.com/shorts/GFrioREuVsA?si=Ng9a34wo7E3M-soS",
-            "https://youtube.com/shorts/noL3zTI1JpI?si=hBonSqw3PI8MhzY2",
-            "https://youtube.com/shorts/N97i34LrjJ0?si=wAUwRWOMZro4D4d7",
-            "https://youtube.com/shorts/AXovfLD5EtU?si=WtyB7bBKxt4xVf--",
-            "https://youtu.be/ySLCgbi9lB4?si=J8CU6cPCU8asAOeR",
-            "https://youtube.com/shorts/GLklSTkd7SU?si=A0rucyOayMu7UhLZ",
-            "https://youtube.com/shorts/p_9Izm9DqK4?si=BJbXyaXAoOxCLqJ9",
-            "https://youtube.com/shorts/lRvS6WdeEKc?si=kVZBb8JpSOB1dEZX",
-            "https://youtu.be/uySHPsJZZ98?si=wtsPXphPtApBhtFs"
-        ];
-
-        // Redirect to a random link
-        window.onload = function() {
-            const randomIndex = Math.floor(Math.random() * links.length);
-            const randomLink = links[randomIndex];
-            setTimeout(() => {
-                window.location.href = randomLink;
-            }, 4000); // Redirect after 5 seconds
-        };
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Protected Links</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    .login-container {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .input-field {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #007BFF;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
+    .hidden {
+      display: none;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-    <p>Loading sleepy barbarian... Please wait!</p>
+  <div id="login-screen" class="login-container">
+    <h1>Login</h1>
+    <input class="input-field" type="text" id="username" placeholder="Username" />
+    <input class="input-field" type="password" id="password" placeholder="Password" />
+    <button class="button" onclick="login()">Login</button>
+    <p id="error-message" class="error hidden">Invalid username or password!</p>
+  </div>
+
+  <div id="links-screen" class="hidden">
+    <h1>Links</h1>
+    <a class="button" href="https://desmosgraphs.netlify.app" target="_blank">1. Desmos Graphs</a>
+    <a class="button" href="https://sl33pyb4rb4ri4n.netlify.app" target="_blank">2. Sl33py B4rb4ri4n</a>
+    <a class="button" href="https://brrskibidi440.netlify.app" target="_blank">3. Brr Skibidi 440</a>
+    <a class="button" href="https://bobisverygoodatfortnite551.netlify.app" target="_blank">4. Bob is Very Good at Fortnite</a>
+    <a class="button" href="https://urbadatfortnite.netlify.app" target="_blank">5. Ur Bad at Fortnite</a>
+    <a class="button" href="https://swampshrek.netlify.app" target="_blank">6. Swamp Shrek</a>
+    <a class="button" href="https://toiletsareveryskibidi322.netlify.app/" target="_blank">7. Toilets are Very Skibidi</a>
+    <a class="button" href="https://skibidispeaker319.netlify.app" target="_blank">8. Skibidi Speaker</a>
+    <a class="button" href="https://loquacious-sorbet-a2257d.netlify.app" target="_blank">9. Loquacious Sorbet</a>
+    <a class="button" href="https://gg33.netlify.app" target="_blank">10. GG33</a>
+    <a class="button" href="https://glittering-daifuku-c5377c.netlify.app" target="_blank">11. Glittering Daifuku</a>
+  </div>
+
+  <script>
+    const validUsers = [
+      { username: "sigma", password: "boy" },
+      { username: "alpha", password: "male" }
+    ];
+
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorMessage = document.getElementById("error-message");
+
+      const isValidUser = validUsers.some(
+        user => user.username === username && user.password === password
+      );
+
+      if (isValidUser) {
+        document.getElementById("login-screen").classList.add("hidden");
+        document.getElementById("links-screen").classList.remove("hidden");
+      } else {
+        errorMessage.classList.remove("hidden");
+      }
+    }
+  </script>
 </body>
 </html>
