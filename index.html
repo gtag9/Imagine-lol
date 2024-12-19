@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Protected Links</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    .login-container, .links-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .input-field {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 16px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .button {
+      display: inline-block;
+      margin: 10px 5px;
+      padding: 10px 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #007BFF;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
+    iframe {
+      width: 80%;
+      height: 80%;
+      border: none;
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hidden {
+      display: none;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+    #fullscreen-button-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="login-screen" class="login-container">
+    <h1>Creating Account</h1>
+    <p>We are creating your account... Please wait!</p>
+  </div>
+
+  <div id="set-username-screen" class="hidden">
+    <h1>Choose a Username</h1>
+    <input class="input-field" type="text" id="username" placeholder="Enter your username" />
+    <button class="button" onclick="setUsername()">Set Username</button>
+  </div>
+
+  <div id="inventory-screen" class="hidden">
+    <h1>Check Inventory</h1>
+    <p>Checking if you have the required item for access...</p>
+  </div>
+
+  <div id="links-screen" class="hidden">
+    <h1>Links</h1>
+    <button class="button" onclick="openLink('https://desmosgraphs.netlify.app')">1. Desmos Graphs</button>
+    <button class="button" onclick="openLink('https://sl33pyb4rb4ri4n.netlify.app')">2. Sl33py B4rb4ri4n</button>
+    <button class="button" onclick="openLink('https://brrskibidi440.netlify.app')">3. Brr Skibidi 440</button>
+    <button class="button" onclick="openLink('https://bobisverygoodatfortnite551.netlify.app')">4. Bob is Very Good at Fortnite</button>
+    <button class="button" onclick="openLink('https://urbadatfortnite.netlify.app')">5. Ur Bad at Fortnite</button>
+    <button class="button" onclick="openLink('https://swampshrek.netlify.app')">6. Swamp Shrek</button>
+    <button class="button" onclick="openLink('https://toiletsareveryskibidi322.netlify.app/')">7. Toilets are Very Skibidi</button>
+    <button class="button" onclick="openLink('https://skibidispeaker319.netlify.app')">8. Skibidi Speaker</button>
+    <button class="button" onclick="openLink('https://loquacious-sorbet-a2257d.netlify.app')">9. Loquacious Sorbet</button>
+    <button class="button" onclick="openLink('https://gg33.netlify.app')">10. GG33</button>
+    <button class="button" onclick="openLink('https://glittering-daifuku-c5377c.netlify.app')">11. Glittering Daifuku</button>
+    <iframe id="iframe" class="hidden"></iframe>
+    <div id="fullscreen-button-container" class="hidden">
+      <button class="button" onclick="toggleFullScreen()">Full Screen</button>
+    </div>
+  </div>
+
+  <script src="https://playfabapi.azurewebsites.net/PlayFabClientSdk.js"></script>
+  <script>
+    const titleId = "9D8C3";  // Your PlayFab Title ID
+    const requiredItemId = "GYATT";  // Your required item ID
+    PlayFab.settings.titleId = titleId;
+
+    // Automatically create the account and prompt for a username
+    window.onload = function() {
+      createAccount();
+    };
+
+    function createAccount() {
+      const randomUsername = "user" + Math.floor(Math.random() * 1000000); // Random username
+      const randomPassword = "password" + Math.floor(Math.random() * 1000000); // Random password
+
+      const createRequest = {
+        TitleId: titleId,
+        Username: randomUsername,
+        Password: randomPassword,
+        RequireBothUsernameAndEmail: false
+      };
+
+      console.log("Creating account with", createRequest);
+
+      PlayFabClient.RegisterPlayFabUser(createRequest, function(result) {
+        if (result.data.Status === "OK") {
+          console.log("Account created successfully", result);
+          loginUser(result.data.PlayFabId);
+        } else {
+          console.log("Account creation failed", result);
+          alert("Error creating account. Please try again.");
+        }
+      });
+    }
+
+    function loginUser(playFabId) {
+      const loginRequest = {
+        PlayFabId: playFabId
+      };
+
+      PlayFabClient.LoginWithPlayFab(loginRequest, function(loginResult) {
+        if (loginResult.data.Status === "OK") {
+          console.log("Logged in successfully", loginResult);
+          document.getElementById("login-screen").classList.add("hidden");
+          document.getElementById("set-username-screen").classList.remove("hidden");
+        } else {
+          console.log("Login failed", loginResult);
+          alert("Error logging in. Please try again.");
+        }
+      });
+    }
+
+    function setUsername() {
+      const username = document.getElementById("username").value;
+      if (!username) {
+        alert("Please enter a username.");
+        return;
+      }
+
+      // Get the current PlayFabId
+      PlayFabClient.GetAccountInfo({}, function(result) {
+        if (result.data.Status === "OK") {
+          const updateRequest = {
+            PlayFabId: result.data.AccountInfo.PlayFabId,
+            DisplayName: username
+          };
+
+          PlayFabClient.UpdateUserTitleDisplayName(updateRequest, function(updateResult) {
+            if (updateResult.data.Status === "OK") {
+              console.log("Username set successfully", updateResult);
+              document.getElementById("set-username-screen").classList.add("hidden");
+              checkInventory();
+            } else {
+              console.log("Failed to set username", updateResult);
+              alert("Failed to set username. Please try again.");
+            }
+          });
+        } else {
+          console.log("Failed to get account info", result);
+        }
+      });
+    }
+
+    function checkInventory() {
+      document.getElementById("inventory-screen").classList.remove("hidden");
+
+      PlayFabClient.GetUserInventory({}, function(result) {
+        if (result.data.Status === "OK") {
+          const items = result.data.Inventory;
+          const hasItem = items.some(item => item.ItemId === requiredItemId);
+
+          if (hasItem) {
+            console.log("Item found! Access granted.");
+            document.getElementById("inventory-screen").classList.add("hidden");
+            document.getElementById("links-screen").classList.remove("hidden");
+          } else {
+            console.log("Item not found! Access denied.");
+            alert("You do not have the required item to access the links.");
+          }
+        } else {
+          console.log("Failed to check inventory", result);
+        }
+      });
+    }
+
+    function openLink(url) {
+      const iframe = document.getElementById("iframe");
+      iframe.src = url;
+      iframe.classList.remove("hidden");
+    }
+
+    function toggleFullScreen() {
+      const iframe = document.getElementById("iframe");
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.mozRequestFullScreen) {
+        iframe.mozRequestFullScreen();
+      } else if (iframe.webkitRequestFullscreen)
