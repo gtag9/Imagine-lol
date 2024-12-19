@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Protected Links</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    .login-container, .links-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .input-field {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 16px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #007BFF;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
+    iframe {
+      width: 80%;
+      height: 80%;
+      border: none;
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hidden {
+      display: none;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div id="login-screen" class="login-container">
+    <h1>Login</h1>
+    <input class="input-field" type="text" id="username" placeholder="Username" />
+    <input class="input-field" type="password" id="password" placeholder="Password" />
+    <button class="button" onclick="login()">Login</button>
+    <p id="error-message" class="error hidden">Invalid username or password!</p>
+  </div>
+
+  <div id="links-screen" class="hidden">
+    <h1>Links</h1>
+    <button class="button" onclick="openLink('https://desmosgraphs.netlify.app')">1. Desmos Graphs</button>
+    <button class="button" onclick="openLink('https://sl33pyb4rb4ri4n.netlify.app')">2. Sl33py B4rb4ri4n</button>
+    <button class="button" onclick="openLink('https://brrskibidi440.netlify.app')">3. Brr Skibidi 440</button>
+    <button class="button" onclick="openLink('https://bobisverygoodatfortnite551.netlify.app')">4. Bob is Very Good at Fortnite</button>
+    <button class="button" onclick="openLink('https://urbadatfortnite.netlify.app')">5. Ur Bad at Fortnite</button>
+    <button class="button" onclick="openLink('https://swampshrek.netlify.app')">6. Swamp Shrek</button>
+    <button class="button" onclick="openLink('https://toiletsareveryskibidi322.netlify.app/')">7. Toilets are Very Skibidi</button>
+    <button class="button" onclick="openLink('https://skibidispeaker319.netlify.app')">8. Skibidi Speaker</button>
+    <button class="button" onclick="openLink('https://loquacious-sorbet-a2257d.netlify.app')">9. Loquacious Sorbet</button>
+    <button class="button" onclick="openLink('https://gg33.netlify.app')">10. GG33</button>
+    <button class="button" onclick="openLink('https://glittering-daifuku-c5377c.netlify.app')">11. Glittering Daifuku</button>
+    <iframe id="iframe" class="hidden"></iframe>
+  </div>
+
+  <script>
+    const validUsers = [
+      { username: "sigma", password: "boy" },
+      { username: "alpha", password: "male" }
+    ];
+
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorMessage = document.getElementById("error-message");
+
+      const isValidUser = validUsers.some(
+        user => user.username === username && user.password === password
+      );
+
+      if (isValidUser) {
+        document.getElementById("login-screen").classList.add("hidden");
+        document.getElementById("links-screen").classList.remove("hidden");
+      } else {
+        errorMessage.classList.remove("hidden");
+      }
+    }
+
+    function openLink(url) {
+      const iframe = document.getElementById("iframe");
+      iframe.src = url;
+      iframe.classList.remove("hidden");
+    }
+
+    // Add an RGB background effect
+    let hue = 0;
+    setInterval(() => {
+      document.body.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+      hue = (hue + 1) % 360;
+    }, 50);
+  </script>
+</body>
+</html>
